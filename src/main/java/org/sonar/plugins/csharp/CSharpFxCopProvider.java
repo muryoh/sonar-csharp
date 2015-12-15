@@ -49,6 +49,7 @@ public class CSharpFxCopProvider {
   private static final String FXCOP_DIRECTORIES_PROPERTY_KEY = "sonar.cs.fxcop.directories";
   private static final String FXCOP_REFERENCES_PROPERTY_KEY = "sonar.cs.fxcop.references";
   private static final String FXCOP_REPORT_PATH_PROPERTY_KEY = "sonar.cs.fxcop.reportPath";
+  private static final String FXCOP_ASSEMBLY_COMPARE_MODE_KEY = "sonar.cs.fxcop.assemblyCompareMode";
 
   private static final FxCopConfiguration FXCOP_CONF = new FxCopConfiguration(
     CSharpPlugin.LANGUAGE_KEY,
@@ -59,7 +60,8 @@ public class CSharpFxCopProvider {
     FXCOP_ASPNET_PROPERTY_KEY,
     FXCOP_DIRECTORIES_PROPERTY_KEY,
     FXCOP_REFERENCES_PROPERTY_KEY,
-    FXCOP_REPORT_PATH_PROPERTY_KEY);
+    FXCOP_REPORT_PATH_PROPERTY_KEY,
+    FXCOP_ASSEMBLY_COMPARE_MODE_KEY);
 
   private CSharpFxCopProvider() {
   }
@@ -113,7 +115,14 @@ public class CSharpFxCopProvider {
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build());
+        .build(),
+      PropertyDefinition.builder(FXCOP_ASSEMBLY_COMPARE_MODE_KEY)
+            .name(deprecatedName("Assembly compare mode"))
+            .description(deprecatedDescription("The mode to be used when comparing assemblies. Example: 'StrongNameIgnoringVersion'"))
+            .category(CATEGORY)
+            .subCategory(SUBCATEGORY)
+            .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
+            .build());
   }
 
   private static String deprecatedDescription(String description) {
